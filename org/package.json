@@ -5,8 +5,10 @@
   "scripts": {
    "typeorm": "ts-node -P tsconfig.app.json -r tsconfig-paths/register ../../node_modules/typeorm/cli-ts-node-commonjs.js",
   "migration:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
-  "migration:run": "npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm -- migration:revert"
+  "migration:run": "npm run typeorm -- migration:run -d apps/recipe-backend/src/environments/typeorm.config.ts",
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "db:migrate": "nx-cloud skip && nx run recipe-backend:build && npx typeorm migration:run -d dist/apps/recipe-backend/src/data-source.js"
+
   },
   "private": true,
   "devDependencies": {
