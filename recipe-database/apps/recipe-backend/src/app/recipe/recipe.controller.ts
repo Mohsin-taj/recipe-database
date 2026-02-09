@@ -36,7 +36,7 @@ export class RecipeController {
         return this.recipeService.addIngredient(recipeId, body);
     }
 
-    @Delete('ingredients/:ingredientId') 
+    @Delete('ingredients/:ingredientId')
     removeIngredient(@Param('ingredientId') ingredientId: string) {
         return this.recipeService.removeIngredient(ingredientId);
     }

@@ -7,14 +7,14 @@ import { RecipeIngredient } from './entity/recipeingredient.entity';
 
 @Injectable()
 export class RecipeService {
-    constructor(
+  constructor(
     @InjectRepository(Recipe)
     private recipeRepo: Repository<Recipe>,
 
     @InjectRepository(RecipeIngredient)
     private ingredientRepo: Repository<RecipeIngredient>,
 
-  ) {}
+  ) { }
 
   findAll() {
     return this.recipeRepo.find();
@@ -22,11 +22,11 @@ export class RecipeService {
 
 
   async findOne(id: string) {
-  return await this.recipeRepo.findOne({
-    where: { recipeId: id },
-    relations: ['ingredients'] 
-  });
-}
+    return await this.recipeRepo.findOne({
+      where: { recipeId: id },
+      relations: ['ingredients']
+    });
+  }
 
 
   create(data: any) {
@@ -35,20 +35,12 @@ export class RecipeService {
   }
 
   async update(id: string, updateDto: any) {
-  // HIGHLIGHT: Use .save() instead of .update() to handle relations
-  // We must merge the ID into the data so TypeORM knows to update the existing record
-  const recipeToUpdate = {
-    //...updateDto,
-    recipeId: id
-  };
+    const recipeToUpdate = {
+      recipeId: id
+    };
 
-  // HIGHLIGHT: .save() will automatically handle the One-to-Many ingredients array
-  return await this.recipeRepo.save(recipeToUpdate);
-}
-  /*async update(id: string, data: any) {
-    await this.recipeRepo.update(id, data);
-    return this.findOne(id);
-  }*/
+    return await this.recipeRepo.save(recipeToUpdate);
+  }
 
   findIngredients(recipeId: string) {
     return this.ingredientRepo.find({ where: { recipe: { recipeId } } });
@@ -60,7 +52,7 @@ export class RecipeService {
   }
 
   async removeIngredient(ingredientId: string) {
-  await this.ingredientRepo.delete(ingredientId);
-  return { deleted: true }; 
+    await this.ingredientRepo.delete(ingredientId);
+    return { deleted: true };
   }
 }

@@ -1,7 +1,7 @@
 <div class="create-container p-4">
   <p-card header="Create New Recipe" [style]="{ 'max-width': '600px', 'margin': 'auto' }">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-      
+
       <!-- Basic Info -->
       <div class="field mb-4">
         <label for="name" class="block mb-2 font-bold">Recipe Name</label>
@@ -10,32 +10,37 @@
 
       <div class="field mb-4">
         <label for="description" class="block mb-2 font-bold">Description</label>
-        <textarea pTextarea id="description" formControlName="description" rows="3" class="w-full" placeholder="Tell us about the dish..."></textarea>
+        <textarea pTextarea id="description" formControlName="description" rows="3" class="w-full"
+          placeholder="Tell us about the dish..."></textarea>
       </div>
 
       <!-- Ingredients Section -->
       <div class="flex justify-content-between align-items-center mb-3">
         <h3 class="m-0">Ingredients</h3>
-        <p-button label="Add Item" icon="pi pi-plus" size="small" (onClick)="addIngredient()" [outlined]="true"></p-button>
+        <p-button label="Add Item" icon="pi pi-plus" size="small" (onClick)="addIngredient()"
+          [outlined]="true"></p-button>
       </div>
 
       <div formArrayName="ingredients">
-        <div *ngFor="let ing of ingredients.controls; let i=index" [formGroupName]="i" class="flex gap-2 mb-2 align-items-center">
-          
+        <div *ngFor="let ing of ingredients.controls; let i=index" [formGroupName]="i"
+          class="flex gap-2 mb-2 align-items-center">
+
           <div class="flex-grow-1">
             <input pInputText formControlName="name" placeholder="Ingredient (e.g. Salt)" class="w-full" />
           </div>
-          
+
           <div style="width: 100px;">
             <input pInputText formControlName="quantity" placeholder="Qty" class="w-full" />
           </div>
 
-          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true" (onClick)="removeIngredient(i)"></p-button>
+          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+            (onClick)="removeIngredient(i)"></p-button>
         </div>
       </div>
 
       <!-- Empty State -->
-      <div *ngIf="ingredients.length === 0" class="text-center p-4 border-1 border-dashed border-round surface-border text-500 mb-3">
+      <div *ngIf="ingredients.length === 0"
+        class="text-center p-4 border-1 border-dashed border-round surface-border text-500 mb-3">
         No ingredients added yet. Click "Add Item" above.
       </div>
 

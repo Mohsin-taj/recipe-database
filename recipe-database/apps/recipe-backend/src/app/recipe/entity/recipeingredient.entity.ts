@@ -16,9 +16,8 @@ export class RecipeIngredient {
   recipeId: string;
 
 
-  //@ManyToOne(() => Recipe, (recipe) => recipe.ingredients, { onDelete: 'CASCADE' })
   @ManyToOne('Recipe', (recipe: any) => recipe.ingredient, {
-    
+
     onDelete: 'CASCADE'
   })
   @JoinColumn({ name: 'recipeId' })

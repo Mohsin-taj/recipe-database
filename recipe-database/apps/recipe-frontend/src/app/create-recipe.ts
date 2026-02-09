@@ -14,11 +14,11 @@ import { RecipeService } from './recipe.service';
   selector: 'app-create-recipe',
   standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    ButtonModule, 
-    InputTextModule, 
-    TextareaModule, 
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    InputTextModule,
+    TextareaModule,
     CardModule
   ],
   templateUrl: './create-recipe.html',
@@ -32,15 +32,14 @@ export class CreateRecipe {
   recipeForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
-    ingredients: this.fb.array([]) // Initialize empty array
+    ingredients: this.fb.array([])
   });
 
-  // Getter for easy access in HTML
   get ingredients() {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
-  // Add a new ingredient row
+
   addIngredient() {
     const ingredientForm = this.fb.group({
       name: ['', Validators.required],
@@ -49,7 +48,7 @@ export class CreateRecipe {
     this.ingredients.push(ingredientForm);
   }
 
-  // Remove a specific row
+
   removeIngredient(index: number) {
     this.ingredients.removeAt(index);
   }
@@ -57,7 +56,7 @@ export class CreateRecipe {
   onSubmit() {
     if (this.recipeForm.valid) {
       this.service.createRecipe(this.recipeForm.value).subscribe((newRecipe: any) => {
-        // Redirect to edit page or list
+
         this.router.navigate(['/edit-recipe', newRecipe.recipeId]);
       });
     }

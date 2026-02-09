@@ -11,7 +11,7 @@ import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RecipeService } from './recipe.service';
-import { Recipe,Recipeingredient } from '@recipe-database/shared-models';
+import { Recipe, Recipeingredient } from '@recipe-database/shared-models';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -25,14 +25,14 @@ export class EditRecipe implements OnInit {
   private fb = inject(FormBuilder);
   private service = inject(RecipeService);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);  
+  private router = inject(Router);
   private messageService = inject(MessageService);
 
   recipeId: string | null = null;
   recipeForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
-    ingredients: this.fb.array([]) // Dynamic list
+    ingredients: this.fb.array([])
   });
 
   get ingredients() {
@@ -47,23 +47,21 @@ export class EditRecipe implements OnInit {
   }
 
   loadRecipe() {
-  this.service.getRecipe(this.recipeId!).subscribe((recipe: Recipe) => {
-    this.recipeForm.patchValue({
-      name: recipe.name,
-      description: recipe.description
-    });
+    this.service.getRecipe(this.recipeId!).subscribe((recipe: Recipe) => {
+      this.recipeForm.patchValue({
+        name: recipe.name,
+        description: recipe.description
+      });
 
-    // Clear existing rows first
-    this.ingredients.clear();
-    
-    // Now this will work because RecipeIngredient is exported and Service is typed
-    recipe.ingredients?.forEach(ing => this.addIngredient(ing));
-  });
-}
+      this.ingredients.clear();
+
+      recipe.ingredients?.forEach(ing => this.addIngredient(ing));
+    });
+  }
 
   addIngredient(data?: Recipeingredient) {
     this.ingredients.push(this.fb.group({
-      id: [data?.recipeId|| null],
+      id: [data?.recipeId || null],
       name: [data?.name || '', Validators.required],
       quantity: [data?.quantity || '', Validators.required]
     }));
@@ -74,25 +72,23 @@ export class EditRecipe implements OnInit {
   }
 
   onUpdate() {
-  if (this.recipeForm.valid && this.recipeId) {
-    // recipeForm.value now includes the ingredients array automatically
-    this.service.updateRecipe(this.recipeId, this.recipeForm.value).subscribe({
-      next: () => {
-        this.messageService.add({ 
-          severity: 'success', 
-          summary: 'Updated', 
-          detail: 'Recipe saved successfully' 
-        });
-        
-        // 2. Navigate programmatically after success
-        setTimeout(() => {
-          this.router.navigate(['/view-recipe', this.recipeId]);
-        }, 1000);
-      },
-      error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Update failed' });
-      }
-    });
+    if (this.recipeForm.valid && this.recipeId) {
+      this.service.updateRecipe(this.recipeId, this.recipeForm.value).subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Updated',
+            detail: 'Recipe saved successfully'
+          });
+
+          setTimeout(() => {
+            this.router.navigate(['/view-recipe', this.recipeId]);
+          }, 1000);
+        },
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Update failed' });
+        }
+      });
     }
   }
 }

@@ -13,4 +13,4 @@ import { RecipeIngredient } from './entity/recipeingredient.entity';
   controllers: [RecipeController],
   providers: [RecipeService]
 })
-export class RecipeModule {}
+export class RecipeModule { }

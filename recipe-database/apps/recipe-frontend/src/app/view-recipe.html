@@ -1,8 +1,6 @@
 <div class="p-8">
-    <!-- Check if data exists before showing cards -->
     <div *ngIf="view_recipe">
         
-        <!-- CARD 1: Recipe Details -->
         <div class="mb-4">
             <p-card [header]="view_recipe.name">
                 <p class="m-0">
@@ -11,7 +9,6 @@
             </p-card>
         </div>
 
-        <!-- CARD 2: Ingredients List -->
         <div class="mb-4">
             <p-card header="Ingredients">
                 <ul *ngIf="view_recipe.ingredients; else noIng">
@@ -26,10 +23,5 @@
         </div>
 
     </div>
-
-    <!-- Show while waiting for the database 
-    <div *ngIf="!view_recipe">
-        <p-card>Loading recipe details...</p-card>
-    </div>-->
 </div>
 
