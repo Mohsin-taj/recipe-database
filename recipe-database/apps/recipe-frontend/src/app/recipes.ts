@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { RecipeService } from './recipe.service';
-import { Recipe } from '@org/shared-models';
+import { Recipe } from '@recipe-database/shared-models';
 
 @Component({
   selector: 'app-recipes',

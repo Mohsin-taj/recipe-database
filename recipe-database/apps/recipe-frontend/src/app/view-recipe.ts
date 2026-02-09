@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { Recipe } from '@org/shared-models';
+import { Recipe } from '@recipe-database/shared-models';
 import { SharedModule } from 'primeng/api';
 import { RecipeService } from './recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
