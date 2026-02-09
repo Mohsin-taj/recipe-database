@@ -1,0 +1,35 @@
+<div class="p-8">
+    <!-- Check if data exists before showing cards -->
+    <div *ngIf="view_recipe">
+        
+        <!-- CARD 1: Recipe Details -->
+        <div class="mb-4">
+            <p-card [header]="view_recipe.name">
+                <p class="m-0">
+                    <strong>Description:</strong> {{ view_recipe.description }}
+                </p>
+            </p-card>
+        </div>
+
+        <!-- CARD 2: Ingredients List -->
+        <div class="mb-4">
+            <p-card header="Ingredients">
+                <ul *ngIf="view_recipe.ingredients; else noIng">
+                    <li *ngFor="let ing of view_recipe.ingredients">
+                        {{ ing.name }} - {{ ing.quantity }}
+                    </li>
+                </ul>
+                <ng-template #noIng>
+                    <p>No ingredients found for this recipe.</p>
+                </ng-template>
+            </p-card>
+        </div>
+
+    </div>
+
+    <!-- Show while waiting for the database 
+    <div *ngIf="!view_recipe">
+        <p-card>Loading recipe details...</p-card>
+    </div>-->
+</div>
+
